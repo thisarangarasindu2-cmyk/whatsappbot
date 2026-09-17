@@ -51,7 +51,7 @@ async function startBot() {
     // =========================================================
     // 3. SCHEDULED MESSAGES (තනියම උදේට/රෑට යන ඒවා)
     // =========================================================
-    const targetJid = '1203630XXXXX@g.us'; // ඔයාගේ Group JID එක මෙතැනට දාන්න
+    const targetJid = '120363429674680583@g.us'; // ඔයාගේ Group JID එක මෙතැනට දාන්න
 
     // උදේ 6:00 (O/L Exam Countdown එකත් සමඟ)
     cron.schedule('0 6 * * *', async () => {
