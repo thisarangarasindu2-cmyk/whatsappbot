@@ -2,7 +2,25 @@ const { default: makeWASocket, useMultiFileAuthState, DisconnectReason } = requi
 const qrcode = require('qrcode-terminal');
 const pino = require('pino');
 const cron = require('node-cron');
+const express = require('express');
 
+// =========================================================
+// 1. EXPRESS WEB SERVER (Render Free Web Service සඳහා)
+// =========================================================
+const app = express();
+const port = process.env.PORT || 3000;
+
+app.get('/', (req, res) => {
+    res.send('WhatsApp Bot is Online & Running 24/7! 🚀');
+});
+
+app.listen(port, () => {
+    console.log(`Web Server listening on port ${port}`);
+});
+
+// =========================================================
+// 2. MAIN WHATSAPP BOT FUNCTION
+// =========================================================
 async function startBot() {
     const { state, saveCreds } = await useMultiFileAuthState('auth_info');
 
@@ -31,11 +49,11 @@ async function startBot() {
     });
 
     // =========================================================
-    // SCHEDULED MESSAGES (තනියම උදේට/රෑට යන ඒවා)
+    // 3. SCHEDULED MESSAGES (තනියම උදේට/රෑට යන ඒවා)
     // =========================================================
-    const targetJid = '120363429674680583@g.us'; // ඔයාගේ Group JID එක මෙතැනට දාන්න
+    const targetJid = '1203630XXXXX@g.us'; // ඔයාගේ Group JID එක මෙතැනට දාන්න
 
-    // උදේ 6:00
+    // උදේ 6:00 (O/L Exam Countdown එකත් සමඟ)
     cron.schedule('0 6 * * *', async () => {
         const examDate = new Date(2026, 11, 1); 
         const today = new Date();
@@ -57,7 +75,7 @@ async function startBot() {
 
 
     // =========================================================
-    // COMMAND RESPONSES (.tagall, .ol, .menu, .myid etc.)
+    // 4. COMMAND RESPONSES (.tagall, .ol, .menu, .myid, .ping etc.)
     // =========================================================
     sock.ev.on('messages.upsert', async ({ messages, type }) => {
         if (type !== 'notify') return;
